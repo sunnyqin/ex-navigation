@@ -22,6 +22,8 @@ type Props = {
   drawerBackgroundColor: string,
   drawerPosition: 'left' | 'right',
   selectedItem: any,
+  afterClose: Function,
+  afterOpen: Function
 };
 
 type State = {
@@ -43,10 +45,12 @@ export default class ExNavigationDrawerLayout extends React.Component {
           this._component = component;
         }}
         onDrawerClose={() => {
-          this.setState({ isOpen: false });
+          this.props.afterClose && this.props.afterClose();
+          this.setState({ isOpen: false })
         }}
         onDrawerOpen={() => {
-          this.setState({ isOpen: true });
+          this.props.afterOpen && this.props.afterOpen();
+          this.setState({ isOpen: true })
         }}
         drawerBackgroundColor={this.props.drawerBackgroundColor}
         drawerWidth={this.props.width}

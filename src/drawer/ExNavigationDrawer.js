@@ -60,6 +60,8 @@ type Props = {
   drawerBackgroundColor: string,
   drawerWidth: 300,
   drawerStyle: any,
+  afterOpen: Function,
+  afterClose: Function,
   children: Array<React.Element<any>>,
   drawerPosition?: 'left' | 'right',
   navigation: ExNavigationContext,
@@ -149,6 +151,8 @@ class ExNavigationDrawer extends PureComponent<any, Props, State> {
 
     return (
       <ExNavigationDrawerLayout
+      	afterClose={this.props.afterClose}
+      	afterOpen={this.props.afterOpen}
         ref={component => {
           this._drawerLayout = component;
         }}
