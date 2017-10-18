@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions
 } from 'react-native';
 import PureComponent from './utils/PureComponent';
 import { unsupportedNativeView } from './ExUnsupportedNativeView';
@@ -25,11 +26,12 @@ if (expoModule) {
 // Exponent draws under the status bar on Android, but vanilla React Native does not.
 // So we need to factor the status bar height in with Exponent but can ignore it with
 // vanilla React Native
+const isPhoneX = Dimensions.get('window').height === 812
 const STATUSBAR_HEIGHT = Platform.OS === 'ios'
   ? 20
   : global.__exponent ? 24 : 0;
 
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 55;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? (isPhoneX ? 65 : 44) : 55;
 const BACKGROUND_COLOR = Platform.OS === 'ios' ? '#EFEFF2' : '#FFF';
 const BORDER_BOTTOM_COLOR = 'rgba(0, 0, 0, .15)';
 const BORDER_BOTTOM_WIDTH = Platform.OS === 'ios'
@@ -61,8 +63,9 @@ const titleStyles = StyleSheet.create({
   title: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+	paddingTop: isPhoneX ? 20 : 0,
     marginHorizontal: 16,
+    alignItems: 'center',
   },
 
   titleText: {
